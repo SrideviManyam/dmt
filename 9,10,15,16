@@ -1,4 +1,4 @@
-#9-----------------------
+#10-----------------------
 
 import pandas as pd
 import scipy.stats as stats
@@ -22,5 +22,89 @@ chi-square Value: 9.34381
 P Value : 0.00224
 Relation
 
-#10----------------------------
+#15----------------------------
+from scipy.spatial import distance_matrix
+import numpy as np
 
+def GetMatrix(text,metric):
+    rows = text.split('\n')
+    rows = [row.strip() for row in rows if row.strip() != ' ']
+    mat = int([list(map(int, row.split(" "))) for row in rows])
+    dist_mat = distnace_matrix(mat , mat , p = metric)
+    dist_mat = np.round(np.matrix(dist_mat),2)
+    return dist_mat
+    
+    
+print('--------Metrices------')
+print('1. Manhattan Distance')
+print('2. Euclidean Distance')
+print('3. Mahanalobis Distance')
+
+text = '''
+        1 2 3
+        4 5 6
+        7 8 9
+        1 4 5
+        '''
+metric = int(input('Enter Metric : '))
+print(GetMatrix(text,metric))
+
+16-------------------
+import numpy as np
+import matplotlib.pyplot as plt
+
+#boxplot
+data = {'c':40,'C++':10,'Java':30,'Python':35}
+courses = list(data.keys())
+values = list(data.values())
+
+plt.bar(courses,values)
+plt.xlabel("Courses offered")
+plt.ylabel("No of Students enrolled")
+plt.title("Students enrolled in diffrent courses")
+
+#piechart
+data = {'c':40,'C++':10,'Java':30,'Python':35}
+labels = list(data.keys())
+slices = list(data.values())
+explode = [0 , 0 ,0 , 0.08]
+plt.pie(slices , labels = labels,explode = explode , shadow = True , startangle = 90 , autopct ='%1.1f%%'
+        ,wedgeprops={'edgecolor':'black'} )
+plt.title("students enrolled in different courses")
+
+#Histogram
+data = np.random.normal(170,10,250)
+plt.hist(data)
+plt.title('Sample Histogram')
+
+#Scatter Plot
+x =  np.random.randint(1,100,size = (100,))
+y =  np.random.randint(1,100,size = (100,))
+labels = np.random.randint(0,2,size=(100,))
+plt.scatter(x,y,c=labels)
+plt.xlabel("X Values")
+plt.ylabel("Y Values")
+plt.title("Scatter Plot")
+
+9--------------
+import pandas as pd
+import numpy as np
+from apyori import apriori
+
+df = pd.read_csv(r'C:\Users\Sridevi\Downloads\Groceries.csv')
+df.head()
+
+trans=[]
+for i in range(7501):
+    trans.append([df.values[i,j] for j in range(20) if df.values[i,j] is not np.nan])
+    
+rules = apriori(transactions=trans,min_support=0.0045,min_confidence=0.3,min_lift=3,max_length=2)
+association_rules = list(rules)
+
+for item in association_rules:
+    items = [x for x in item[0]]
+    print("Rule: "+items[0] + "->"+items[1])
+    print("support: "+str(item[1]))
+    print("Confidence: "+str(item[2][0][2]))
+    print("Lift: "+str(item[2][0][3]))
+    print("==========================")
