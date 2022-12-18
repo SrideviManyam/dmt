@@ -30,7 +30,7 @@ def GetMatrix(text,metric):
     rows = text.split('\n')
     rows = [row.strip() for row in rows if row.strip() != ' ']
     mat = int([list(map(int, row.split(" "))) for row in rows])
-    dist_mat = distnace_matrix(mat , mat , p = metric)
+    dist_mat = distance_matrix(mat , mat , p = metric)
     dist_mat = np.round(np.matrix(dist_mat),2)
     return dist_mat
     
