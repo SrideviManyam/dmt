@@ -1,0 +1,26 @@
+#9-----------------------
+
+import pandas as pd
+import scipy.stats as stats
+
+df = pd.read_csv(r'C:\Users\Sridevi\Downloads\tips.csv')
+df.head()
+
+tab = pd.crosstab(df['sex'],df['time'])
+print(tab)
+chi2,p,dof,expected = stats.chi2_contingency(tab)
+print('chi-square Value:',round(chi2,5))
+print('P Value :',round(p,5))
+print('Relation')if p<= 0.05 else print('No Relation')
+
+//op
+time    Dinner  Lunch
+sex                  
+Female      52     35
+Male       124     33
+chi-square Value: 9.34381
+P Value : 0.00224
+Relation
+
+#10----------------------------
+
